@@ -4,11 +4,9 @@ import (
 	"fmt"
 
 	"alessandromian.dev/golang-app/app/models/database"
-	"alessandromian.dev/golang-app/app/models/user_model"
 	"alessandromian.dev/golang-app/app/router"
 	"alessandromian.dev/golang-app/app/router/middlewares"
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -19,14 +17,7 @@ func main() {
 	r.Use(middlewares.CORS())
 	r.Use(middlewares.Logger())
 
-	Database, dbErr := gorm.Open(postgres.Open("host=localhost user=db_user password=example dbname=golang_db port=5432"), &gorm.Config{})
-
-	if dbErr != nil {
-		panic(dbErr)
-	} else {
-		Database.AutoMigrate(&user_model.User{})
-		database.RegisterControllersDatabase(Database)
-	}
+	database.ConnectDatabase()
 
 	router.RegisterRoutes(r)
 
