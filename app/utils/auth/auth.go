@@ -9,6 +9,11 @@ import (
 
 var secretKey = []byte("secret")
 
+type LoginRequest struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 type AuthClaims struct {
 	UserId uint  `json:"user_id"`
 	Exp    int64 `json:"exp"`
@@ -56,8 +61,6 @@ func VerifyToken(tokenString string) (AuthClaims, error) {
 	if !token.Valid {
 		return *claims, fmt.Errorf("invalid token")
 	}
-
-	print(claims)
 
 	return *claims, nil
 }

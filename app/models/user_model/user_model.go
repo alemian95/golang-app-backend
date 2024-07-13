@@ -23,6 +23,12 @@ func Find(db *gorm.DB, id uint64) (*User, error) {
 	return &user, err
 }
 
+func FindByEmail(db *gorm.DB, email string) (*User, error) {
+	var user User
+	err := db.Where("email =?", email).First(&user).Error
+	return &user, err
+}
+
 func (u *User) Read(db *gorm.DB) error {
 	return db.First(&u, u.ID).Error
 }

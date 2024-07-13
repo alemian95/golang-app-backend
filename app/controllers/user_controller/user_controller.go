@@ -13,17 +13,17 @@ func RegisterRoutes(r *gin.Engine) {
 
 	public := r.Group("/users")
 	{
-		public.GET("/", all)
-		public.GET("/:id", read)
-		public.POST("/", create)
-		public.PATCH("/:id", update)
-		public.DELETE("/:id", delete)
+		public.GET("", all)
+		public.GET(":id", read)
+		public.POST("", create)
+		public.PATCH(":id", update)
+		public.DELETE(":id", delete)
 	}
 
 	protected := r.Group("/users")
 	protected.Use(middlewares.Auth())
 	{
-		// protected.GET("/users", all)
+		// protected.GET("", all)
 	}
 }
 
