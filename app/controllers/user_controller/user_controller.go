@@ -5,15 +5,26 @@ import (
 
 	"alessandromian.dev/golang-app/app/models/database"
 	"alessandromian.dev/golang-app/app/models/user_model"
+	"alessandromian.dev/golang-app/app/router/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterRoutes(r *gin.Engine) {
-	r.GET("/users", all)
-	r.GET("/users/:id", read)
-	r.POST("/users", create)
-	r.PATCH("/users/:id", update)
-	r.DELETE("/users/:id", delete)
+
+	public := r.Group("/users")
+	{
+		public.GET("/", all)
+		public.GET("/:id", read)
+		public.POST("/", create)
+		public.PATCH("/:id", update)
+		public.DELETE("/:id", delete)
+	}
+
+	protected := r.Group("/users")
+	protected.Use(middlewares.Auth())
+	{
+		// protected.GET("/users", all)
+	}
 }
 
 func all(c *gin.Context) {
