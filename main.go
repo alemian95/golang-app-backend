@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"alessandromian.dev/golang-app/app/controllers/user_controller"
+	"alessandromian.dev/golang-app/app/models/database"
 	"alessandromian.dev/golang-app/app/models/user_model"
 	"alessandromian.dev/golang-app/app/router"
 	"alessandromian.dev/golang-app/app/router/middlewares"
@@ -25,11 +25,11 @@ func main() {
 		panic(dbErr)
 	} else {
 		Database.AutoMigrate(&user_model.User{})
-		user_controller.RegisterDatabase(Database)
+		database.RegisterControllersDatabase(Database)
 	}
 
 	router.RegisterRoutes(r)
 
-	fmt.Println("Server listening on port 8080...")
+	fmt.Println("Server listening on http://localhost:8080")
 	r.Run(":8080")
 }
