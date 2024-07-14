@@ -9,10 +9,14 @@ import (
 )
 
 func RegisterRoutes(r *gin.Engine) {
-	// r.GET("/csrf", getCsrf)
-	r.GET("/auth", check)
-	r.POST("/login", login)
-	r.POST("/logout", logout)
+
+	public := r.Group("/auth")
+	{
+		// public.GET("/csrf", getCsrf)
+		public.GET("/check", check)
+		public.POST("/login", login)
+		public.POST("/logout", logout)
+	}
 }
 
 // func getCsrf(c *gin.Context) {
