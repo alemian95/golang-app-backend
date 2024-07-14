@@ -61,6 +61,16 @@ func Auth() gin.HandlerFunc {
 		}
 
 		c.Set("user_id", claims.UserId)
+
+		token, err := auth.GenerateToken(claims.UserId)
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error generating token"})
+			return
+		}
+
+		c.SetCookie("gosession", token, 7200, "/", "localhost", false, false)
+
 		c.Next()
 	}
 }
