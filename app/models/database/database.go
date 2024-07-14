@@ -7,6 +7,9 @@ import (
 
 var db *gorm.DB
 
+/**
+ * Connect to database
+ */
 func ConnectDatabase() {
 	connection, dbErr := gorm.Open(postgres.Open("host=localhost user=db_user password=example dbname=golang_db port=5432"), &gorm.Config{})
 

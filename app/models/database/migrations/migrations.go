@@ -5,6 +5,9 @@ import (
 	"alessandromian.dev/golang-app/app/models/user_model"
 )
 
+/**
+ * Migrates the database.
+ */
 func Migrate() {
 	database.Conn().AutoMigrate(&user_model.User{})
 }

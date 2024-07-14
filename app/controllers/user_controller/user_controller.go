@@ -8,6 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+/**
+ * Register routes for user controller
+ *
+ * @param c *gin.Engine
+ */
 func RegisterRoutes(r *gin.Engine) {
 
 	public := r.Group("/users")
