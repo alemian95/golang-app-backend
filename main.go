@@ -13,9 +13,14 @@ import (
 var Database *gorm.DB
 
 func main() {
+
+	// cookies.InitCookieStore()
+
 	r := gin.New()
+
 	r.Use(middlewares.CORS())
 	r.Use(middlewares.Logger())
+	// r.Use(sessions.Sessions("gosession", cookies.CookieStore))
 
 	database.ConnectDatabase()
 

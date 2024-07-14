@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"time"
 
+	"alessandromian.dev/golang-app/app/models/database"
+	"alessandromian.dev/golang-app/app/models/user_model"
 	"github.com/golang-jwt/jwt"
 )
 
@@ -63,4 +65,20 @@ func VerifyToken(tokenString string) (AuthClaims, error) {
 	}
 
 	return *claims, nil
+}
+
+func GetUserBySession(session string) *user_model.User {
+	claims, err := VerifyToken(session)
+
+	if err != nil {
+		return nil
+	}
+
+	user, err := user_model.Find(database.Conn(), uint64(claims.UserId))
+
+	if err != nil {
+		return nil
+	}
+
+	return user
 }
