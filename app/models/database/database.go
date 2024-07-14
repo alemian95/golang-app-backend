@@ -1,7 +1,6 @@
 package database
 
 import (
-	"alessandromian.dev/golang-app/app/models/user_model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -14,7 +13,6 @@ func ConnectDatabase() {
 	if dbErr != nil {
 		panic(dbErr)
 	} else {
-		connection.AutoMigrate(&user_model.User{})
 		db = connection
 	}
 }

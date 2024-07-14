@@ -3,7 +3,6 @@ package user_controller
 import (
 	"strconv"
 
-	"alessandromian.dev/golang-app/app/models/database"
 	"alessandromian.dev/golang-app/app/models/user_model"
 	"alessandromian.dev/golang-app/app/router/middlewares"
 	"github.com/gin-gonic/gin"
@@ -28,13 +27,13 @@ func RegisterRoutes(r *gin.Engine) {
 }
 
 func all(c *gin.Context) {
-	var users = user_model.All(database.Conn())
+	var users = user_model.All()
 	c.JSON(200, users)
 }
 
 func read(c *gin.Context) {
 	user_id, _ := strconv.ParseUint(c.Params[0].Value, 10, 8)
-	var user, err = user_model.Find(database.Conn(), user_id)
+	var user, err = user_model.Find(user_id)
 	if err != nil {
 		c.JSON(404, gin.H{"error": "user not found"})
 		return
@@ -48,7 +47,7 @@ func create(c *gin.Context) {
 		c.JSON(400, gin.H{"error": "invalid request"})
 		return
 	}
-	if err := user.Create(database.Conn()); err != nil {
+	if err := user.Create(); err != nil {
 		c.JSON(500, gin.H{"error": "database error"})
 		return
 	}
@@ -61,7 +60,7 @@ func update(c *gin.Context) {
 		c.JSON(400, gin.H{"error": "invalid request"})
 		return
 	}
-	if err := user.Update(database.Conn()); err != nil {
+	if err := user.Update(); err != nil {
 		c.JSON(500, gin.H{"error": "database error"})
 		return
 	}
@@ -74,7 +73,7 @@ func delete(c *gin.Context) {
 		c.JSON(400, gin.H{"error": "invalid request"})
 		return
 	}
-	if err := user.Delete(database.Conn()); err != nil {
+	if err := user.Delete(); err != nil {
 		c.JSON(500, gin.H{"error": "database error"})
 		return
 	}

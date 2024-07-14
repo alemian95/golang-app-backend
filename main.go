@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"alessandromian.dev/golang-app/app/models/database"
+	"alessandromian.dev/golang-app/app/models/database/migrations"
 	"alessandromian.dev/golang-app/app/router"
 	"alessandromian.dev/golang-app/app/router/middlewares"
 	"github.com/gin-gonic/gin"
@@ -23,6 +24,7 @@ func main() {
 	// r.Use(sessions.Sessions("gosession", cookies.CookieStore))
 
 	database.ConnectDatabase()
+	migrations.Migrate()
 
 	router.RegisterRoutes(r)
 

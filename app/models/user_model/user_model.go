@@ -1,6 +1,7 @@
 package user_model
 
 import (
+	"alessandromian.dev/golang-app/app/models/database"
 	"gorm.io/gorm"
 )
 
@@ -11,36 +12,36 @@ type User struct {
 	Password string
 }
 
-func All(db *gorm.DB) []User {
+func All() []User {
 	var users []User
-	db.Find(&users)
+	database.Conn().Find(&users)
 	return users
 }
 
-func Find(db *gorm.DB, id uint64) (*User, error) {
+func Find(id uint64) (*User, error) {
 	var user User
-	err := db.First(&user, id).Error
+	err := database.Conn().First(&user, id).Error
 	return &user, err
 }
 
-func FindByEmail(db *gorm.DB, email string) (*User, error) {
+func FindByEmail(email string) (*User, error) {
 	var user User
-	err := db.Where("email =?", email).First(&user).Error
+	err := database.Conn().Where("email =?", email).First(&user).Error
 	return &user, err
 }
 
-func (u *User) Read(db *gorm.DB) error {
-	return db.First(&u, u.ID).Error
+func (u *User) Read() error {
+	return database.Conn().First(&u, u.ID).Error
 }
 
-func (u *User) Create(db *gorm.DB) error {
-	return db.Create(u).Error
+func (u *User) Create() error {
+	return database.Conn().Create(u).Error
 }
 
-func (u *User) Update(db *gorm.DB) error {
-	return db.Save(&u).Error
+func (u *User) Update() error {
+	return database.Conn().Save(&u).Error
 }
 
-func (u *User) Delete(db *gorm.DB) error {
-	return db.Delete(&u, u.ID).Error
+func (u *User) Delete() error {
+	return database.Conn().Delete(&u, u.ID).Error
 }

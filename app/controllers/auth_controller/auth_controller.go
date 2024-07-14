@@ -3,7 +3,6 @@ package auth_controller
 import (
 	"net/http"
 
-	"alessandromian.dev/golang-app/app/models/database"
 	"alessandromian.dev/golang-app/app/models/user_model"
 	"alessandromian.dev/golang-app/app/utils/auth"
 	"github.com/gin-gonic/gin"
@@ -56,7 +55,7 @@ func login(c *gin.Context) {
 	}
 
 	if request.Email == "admin@example.com" && request.Password == "example" {
-		user, err := user_model.FindByEmail(database.Conn(), request.Email)
+		user, err := user_model.FindByEmail(request.Email)
 
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid data"})
