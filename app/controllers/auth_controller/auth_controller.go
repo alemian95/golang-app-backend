@@ -38,9 +38,9 @@ func check(c *gin.Context) {
 		return
 	}
 
-	user := auth.GetUserBySession(token)
+	user, err := auth.GetUserBySession(token)
 
-	if user == nil {
+	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Not authenticated"})
 		return
 	}

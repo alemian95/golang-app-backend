@@ -66,18 +66,18 @@ func VerifyToken(tokenString string) (AuthClaims, error) {
 	return *claims, nil
 }
 
-func GetUserBySession(session string) *user_model.User {
+func GetUserBySession(session string) (*user_model.User, error) {
 	claims, err := VerifyToken(session)
 
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
 	user, err := user_model.Find(uint64(claims.UserId))
 
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
-	return user
+	return user, nil
 }
