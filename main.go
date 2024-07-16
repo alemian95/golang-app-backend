@@ -18,6 +18,7 @@ func main() {
 	// Registering middlewares
 	r.Use(middlewares.CORS())
 	r.Use(middlewares.Logger())
+	r.Use(middlewares.CSRF())
 
 	// Initializing database
 	database.ConnectDatabase()

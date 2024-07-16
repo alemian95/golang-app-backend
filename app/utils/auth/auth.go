@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"crypto/rand"
+	"encoding/base64"
 	"fmt"
 	"time"
 
@@ -80,4 +82,10 @@ func GetUserBySession(session string) (*user_model.User, error) {
 	}
 
 	return user, nil
+}
+
+func GenerateRandomToken() string {
+	b := make([]byte, 32)
+	_, _ = rand.Read(b)
+	return base64.URLEncoding.EncodeToString(b)
 }

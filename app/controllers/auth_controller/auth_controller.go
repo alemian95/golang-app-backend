@@ -17,19 +17,18 @@ func RegisterRoutes(r *gin.Engine) {
 
 	public := r.Group("/auth")
 	{
-		// public.GET("/csrf", getCsrf)
+		public.GET("/csrf", getCsrf)
 		public.GET("/check", check)
 		public.POST("/login", login)
 		public.POST("/logout", logout)
 	}
 }
 
-// func getCsrf(c *gin.Context) {
-// 	token := csrf.Token(c.Request)
-// 	c.Header("X-CSRF-Token", token)
-// 	c.SetCookie("X-CSRF-Token", token, 3600, "/", "localhost", false, true)
-// 	c.JSON(200, gin.H{"csrf": token})
-// }
+func getCsrf(c *gin.Context) {
+	token := auth.GenerateRandomToken()
+	c.SetCookie("XSRF-TOKEN", token, 3600, "/", "localhost", false, true)
+	c.JSON(http.StatusNoContent, gin.H{})
+}
 
 /**
  * Check if user is logged in or not

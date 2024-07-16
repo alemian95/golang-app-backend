@@ -83,22 +83,24 @@ func Auth() gin.HandlerFunc {
 	}
 }
 
-// func CSRF() gin.HandlerFunc {
-// 	return func(c *gin.Context) {
-// 		if c.Request.Method == "POST" || c.Request.Method == "PATCH" || c.Request.Method == "DELETE" {
-// 			tokenHeader := c.GetHeader("X-CSRF-Token")
-// 			tokenCookie, err := c.Cookie("X-CSRF-TOKEN")
+func CSRF() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if c.Request.Method == "POST" || c.Request.Method == "PATCH" || c.Request.Method == "DELETE" {
+			tokenHeader := c.GetHeader("X-XSRF-Token")
+			tokenCookie, err := c.Cookie("XSRF-TOKEN")
 
-// 			if err != nil {
-// 				c.JSON(http.StatusUnauthorized, gin.H{"error": "CSRF token not valid"})
-// 				c.Abort()
-// 				return
-// 			}
+			if err != nil {
+				c.JSON(419, gin.H{"error": "CSRF token not valid"})
+				c.Abort()
+				return
+			}
 
-// 			if tokenHeader == tokenCookie {
-// 				c.Next()
-// 			}
-// 		}
-// 		c.Next()
-// 	}
-// }
+			if tokenHeader != tokenCookie {
+				c.JSON(419, gin.H{"error": "CSRF token not valid"})
+				c.Abort()
+				return
+			}
+		}
+		c.Next()
+	}
+}
