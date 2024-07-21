@@ -26,7 +26,7 @@ func RegisterRoutes(r *gin.Engine) {
 
 func getCsrf(c *gin.Context) {
 	token := auth.GenerateRandomToken()
-	c.SetCookie("XSRF-TOKEN", token, 3600, "/", "localhost", false, true)
+	c.SetCookie(config.XSRF_cookie_name, token, 60, "/", "localhost", false, false)
 	c.JSON(http.StatusNoContent, gin.H{})
 }
 

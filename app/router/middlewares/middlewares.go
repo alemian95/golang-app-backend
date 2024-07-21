@@ -15,7 +15,7 @@ func CORS() gin.HandlerFunc {
 		// Set CORS headers
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:3001")
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, Accept, Origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-XSRF-TOKEN, Authorization, Accept, Origin, Cache-Control, X-Requested-With")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS")
 
 		// Allow OPTIONS requests
@@ -86,8 +86,8 @@ func Auth() gin.HandlerFunc {
 func CSRF() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if c.Request.Method == "POST" || c.Request.Method == "PATCH" || c.Request.Method == "DELETE" {
-			tokenHeader := c.GetHeader("X-XSRF-Token")
-			tokenCookie, err := c.Cookie("XSRF-TOKEN")
+			tokenHeader := c.GetHeader(config.XSRF_header_name)
+			tokenCookie, err := c.Cookie(config.XSRF_cookie_name)
 
 			if err != nil {
 				c.JSON(419, gin.H{"error": "CSRF token not valid"})
