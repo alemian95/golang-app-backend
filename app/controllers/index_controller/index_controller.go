@@ -1,7 +1,8 @@
 package index_controller
 
 import (
-	"alessandromian.dev/golang-app/app/models/database"
+	"golang-app/app/models/database"
+
 	"github.com/gin-gonic/gin"
 )
 

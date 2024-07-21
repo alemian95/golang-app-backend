@@ -1,8 +1,8 @@
 package migrations
 
 import (
-	"alessandromian.dev/golang-app/app/models/database"
-	"alessandromian.dev/golang-app/app/models/user_model"
+	"golang-app/app/models/database"
+	"golang-app/app/models/user_model"
 )
 
 /**

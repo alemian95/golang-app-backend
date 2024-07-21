@@ -3,8 +3,10 @@ package auth_controller
 import (
 	"net/http"
 
-	"alessandromian.dev/golang-app/app/models/user_model"
-	"alessandromian.dev/golang-app/app/utils/auth"
+	"golang-app/app/models/user_model"
+	"golang-app/app/utils/auth"
+	"golang-app/app/utils/config"
+
 	"github.com/gin-gonic/gin"
 )
 

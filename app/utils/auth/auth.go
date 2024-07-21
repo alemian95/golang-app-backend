@@ -6,7 +6,8 @@ import (
 	"fmt"
 	"time"
 
-	"alessandromian.dev/golang-app/app/models/user_model"
+	"golang-app/app/models/user_model"
+
 	"github.com/golang-jwt/jwt"
 )
 

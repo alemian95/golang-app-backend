@@ -3,10 +3,11 @@ package main
 import (
 	"fmt"
 
-	"alessandromian.dev/golang-app/app/models/database"
-	"alessandromian.dev/golang-app/app/models/database/migrations"
-	"alessandromian.dev/golang-app/app/router"
-	"alessandromian.dev/golang-app/app/router/middlewares"
+	"golang-app/app/models/database"
+	"golang-app/app/models/database/migrations"
+	"golang-app/app/router"
+	"golang-app/app/router/middlewares"
+
 	"github.com/gin-gonic/gin"
 )
 

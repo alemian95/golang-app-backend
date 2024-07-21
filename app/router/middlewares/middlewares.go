@@ -5,7 +5,9 @@ import (
 	"net/http"
 	"strings"
 
-	"alessandromian.dev/golang-app/app/utils/auth"
+	"golang-app/app/utils/auth"
+	"golang-app/app/utils/config"
+
 	"github.com/gin-gonic/gin"
 )
 

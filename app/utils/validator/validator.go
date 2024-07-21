@@ -1,8 +1,9 @@
 package validator
 
 import (
-	"alessandromian.dev/golang-app/app/models/user_model"
-	"alessandromian.dev/golang-app/app/utils/auth"
+	"golang-app/app/models/user_model"
+	"golang-app/app/utils/auth"
+
 	"github.com/go-playground/validator/v10"
 )
 

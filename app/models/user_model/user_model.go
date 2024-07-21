@@ -1,7 +1,8 @@
 package user_model
 
 import (
-	"alessandromian.dev/golang-app/app/models/database"
+	"golang-app/app/models/database"
+
 	"gorm.io/gorm"
 )
 

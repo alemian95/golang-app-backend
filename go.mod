@@ -1,4 +1,4 @@
-module alessandromian.dev/golang-app
+module golang-app
 
 go 1.22.0
 

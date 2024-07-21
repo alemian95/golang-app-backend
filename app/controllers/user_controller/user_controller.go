@@ -3,8 +3,9 @@ package user_controller
 import (
 	"strconv"
 
-	"alessandromian.dev/golang-app/app/models/user_model"
-	"alessandromian.dev/golang-app/app/router/middlewares"
+	"golang-app/app/models/user_model"
+	"golang-app/app/router/middlewares"
+
 	"github.com/gin-gonic/gin"
 )
 
