@@ -7,6 +7,7 @@ import (
 
 	"golang-app/app/utils/auth"
 	"golang-app/app/utils/config"
+	"golang-app/app/utils/helpers"
 
 	"github.com/gin-gonic/gin"
 )
@@ -71,10 +72,13 @@ func Auth() gin.HandlerFunc {
 			return
 		}
 
-		c.Set("user_id", claims.UserId)
+		c.Set("user_id", uint64(claims.Payload["user_id"].(float64)))
+
+		newPayload := helpers.NewAssocArray()
+		newPayload["user_id"] = uint64(claims.Payload["user_id"].(float64))
 
 		// Regenerate session
-		token, err := auth.GenerateToken(claims.UserId)
+		token, err := auth.GenerateToken(newPayload)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error generating token"})
 			return

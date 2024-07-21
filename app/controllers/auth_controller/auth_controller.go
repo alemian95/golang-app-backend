@@ -6,6 +6,7 @@ import (
 	"golang-app/app/models/user_model"
 	"golang-app/app/utils/auth"
 	"golang-app/app/utils/config"
+	"golang-app/app/utils/helpers"
 
 	"github.com/gin-gonic/gin"
 )
@@ -88,8 +89,11 @@ func login(c *gin.Context) {
 			return
 		}
 
+		payload := helpers.NewAssocArray()
+		payload["user_id"] = user.ID
+
 		// set session cookie with token
-		token, err := auth.GenerateToken(user.ID)
+		token, err := auth.GenerateToken(payload)
 
 		// check if token is generated correctly
 		if err != nil {

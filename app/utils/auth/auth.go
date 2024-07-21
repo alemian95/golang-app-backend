@@ -19,17 +19,19 @@ type LoginRequest struct {
 }
 
 type AuthClaims struct {
-	UserId uint  `json:"user_id"`
-	Exp    int64 `json:"exp"`
+	// UserId uint  `json:"user_id"`
+	Payload map[string]any `json:"payload"`
+	Exp     int64          `json:"exp"`
 	jwt.StandardClaims
 }
 
-func GenerateToken(user_id uint) (string, error) {
+// func GenerateToken(user_id uint) (string, error) {
+func GenerateToken(payload map[string]any) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour).Unix()
 
 	claims := &AuthClaims{
-		UserId: user_id,
-		Exp:    expirationTime,
+		Payload: payload,
+		Exp:     expirationTime,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime,
 		},
@@ -76,7 +78,7 @@ func GetUserBySession(session string) (*user_model.User, error) {
 		return nil, err
 	}
 
-	user, err := user_model.Find(uint64(claims.UserId))
+	user, err := user_model.Find(uint64(claims.Payload["user_id"].(float64)))
 
 	if err != nil {
 		return nil, err
