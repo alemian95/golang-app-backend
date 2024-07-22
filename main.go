@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
 
 	"golang-app/app/models/database"
 	"golang-app/app/models/database/migrations"
@@ -9,9 +11,15 @@ import (
 	"golang-app/app/router/middlewares"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading environment")
+	}
 
 	// Initializing router
 	r := gin.New()
@@ -31,5 +39,6 @@ func main() {
 
 	// Starting server
 	fmt.Println("Server listening on http://localhost:8080")
-	r.Run(":8080")
+	// r.Run(":8080")
+	r.Run(fmt.Sprintf(":%s", os.Getenv("APP_PORT")))
 }
