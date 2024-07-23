@@ -1,6 +1,7 @@
 package auth_controller
 
 import (
+	"fmt"
 	"net/http"
 
 	"golang-app/app/models/user_model"
@@ -79,18 +80,22 @@ func login(c *gin.Context) {
 		return
 	}
 
-	// check if credentials are correct (now user and password are hardcoded)
-	if request.Email == "admin@example.com" && request.Password == "example" {
-		user, err := user_model.FindByEmail(request.Email)
+	requested_user, err := user_model.FindByEmail(request.Email)
 
-		// check if user exists in db
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid data"})
-			return
-		}
+	if err != nil {
+		// return invalid credentials, we don't want to give information about the user
+		c.JSON(http.StatusNotFound, gin.H{"error": "Invalid credentials"})
+		return
+	}
+
+	fmt.Println(requested_user.Password)
+	fmt.Println(request.Password)
+
+	// check if credentials are correct (now user and password are hardcoded)
+	if auth.CheckPasswordHash(request.Password, requested_user.Password) {
 
 		payload := helpers.NewAssocArray()
-		payload["user_id"] = user.ID
+		payload["user_id"] = requested_user.ID
 
 		// set session cookie with token
 		token, err := auth.GenerateToken(payload)
