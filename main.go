@@ -38,7 +38,6 @@ func main() {
 	router.RegisterRoutes(r)
 
 	// Starting server
-	fmt.Println("Server listening on http://localhost:8080")
-	// r.Run(":8080")
+	fmt.Println(fmt.Sprintf("Server listening on http://localhost:%s", os.Getenv("APP_PORT")))
 	r.Run(fmt.Sprintf(":%s", os.Getenv("APP_PORT")))
 }
