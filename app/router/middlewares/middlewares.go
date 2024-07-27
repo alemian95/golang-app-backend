@@ -3,6 +3,7 @@ package middlewares
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 
 	"golang-app/app/utils/auth"
@@ -16,7 +17,7 @@ func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		// Set CORS headers
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:3001")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", os.Getenv("ALLOW_ORIGIN"))
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-XSRF-TOKEN, Authorization, Accept, Origin, Cache-Control, X-Requested-With")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS")
