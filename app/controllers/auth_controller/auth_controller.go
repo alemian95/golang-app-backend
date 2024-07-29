@@ -76,7 +76,7 @@ func login(c *gin.Context) {
 
 	// check if request is valid
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid data"})
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -84,7 +84,7 @@ func login(c *gin.Context) {
 
 	if err != nil {
 		// return invalid credentials, we don't want to give information about the user
-		c.JSON(http.StatusNotFound, gin.H{"error": "Invalid credentials"})
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Invalid credentials"})
 		return
 	}
 
@@ -113,7 +113,7 @@ func login(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"token": token})
 	} else {
 		// return error
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid credentials"})
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Invalid credentials"})
 	}
 }
 
