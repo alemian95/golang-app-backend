@@ -1,7 +1,6 @@
 package auth_controller
 
 import (
-	"fmt"
 	"net/http"
 
 	"golang-app/app/models/user_model"
@@ -87,9 +86,6 @@ func login(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Invalid credentials"})
 		return
 	}
-
-	fmt.Println(requested_user.Password)
-	fmt.Println(request.Password)
 
 	// check if credentials are correct (now user and password are hardcoded)
 	if auth.CheckPasswordHash(request.Password, requested_user.Password) {
