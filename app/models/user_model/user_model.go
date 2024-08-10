@@ -31,6 +31,19 @@ func FindByEmail(email string) (*User, error) {
 	return &user, err
 }
 
+func CheckIfEmailExists(email string) bool {
+	var user User
+	err := database.Conn().Where("email =?", email).First(&user).Error
+	if err != nil {
+		return false
+	}
+	if user.Email == "" {
+		return false
+	} else {
+		return true
+	}
+}
+
 func (u *User) Read() error {
 	return database.Conn().First(&u, u.ID).Error
 }

@@ -24,6 +24,7 @@ func RegisterRoutes(r *gin.Engine) {
 		public.GET("/check", check)
 		public.POST("/login", login)
 		public.POST("/logout", logout)
+		public.POST("/register", register)
 	}
 }
 
@@ -121,4 +122,41 @@ func login(c *gin.Context) {
 func logout(c *gin.Context) {
 	c.SetCookie("gosession", "", -1000, "/", "localhost", false, false)
 	c.JSON(200, gin.H{"message": "Logged out"})
+}
+
+func register(c *gin.Context) {
+	var request auth.RegisterRequest
+
+	// validate request
+	err := c.ShouldBindJSON(&request)
+
+	// check if request is valid
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	if request.Password != request.PasswordConfirm {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Password confirmation does not match"})
+		return
+	}
+
+	user_exists := user_model.CheckIfEmailExists(request.Email)
+
+	if user_exists {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User already registered"})
+		return
+	}
+
+	hash, _ := auth.HashPassword(request.Password)
+
+	user := user_model.User{
+		Name:     request.Name,
+		Email:    request.Email,
+		Password: hash,
+	}
+
+	user.Create()
+
+	c.JSON(http.StatusNoContent, gin.H{})
 }

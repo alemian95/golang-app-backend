@@ -19,6 +19,13 @@ type LoginRequest struct {
 	Password string `json:"password"`
 }
 
+type RegisterRequest struct {
+	Name            string `json:"name"`
+	Email           string `json:"email"`
+	Password        string `json:"password"`
+	PasswordConfirm string `json:"password_confirm"`
+}
+
 type AuthClaims struct {
 	// UserId uint  `json:"user_id"`
 	Payload map[string]any `json:"payload"`
