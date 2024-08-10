@@ -35,7 +35,7 @@ func CORS() gin.HandlerFunc {
 
 func Logger() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		fmt.Println("Received request:", c.Request.URL)
+		fmt.Println(helpers.GetCurrentDateTimestamp(), " Received request:", c.Request.URL)
 		c.Next()
 	}
 }
