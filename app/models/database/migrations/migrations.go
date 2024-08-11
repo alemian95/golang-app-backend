@@ -17,8 +17,6 @@ func Seed() {
 
 	hash, _ := auth.HashPassword("example")
 
-	database.ConnectDatabase()
-
 	user := user_model.User{
 		Name:     "Admin",
 		Email:    "admin@example.com",
