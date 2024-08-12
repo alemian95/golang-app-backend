@@ -195,7 +195,7 @@ func forgotPassword(c *gin.Context) {
 		Token:  str_token,
 	}
 
-	token.Create()
+	token.Save()
 
 	link := os.Getenv("ALLOW_ORIGIN") + "/reset-password/" + str_token
 

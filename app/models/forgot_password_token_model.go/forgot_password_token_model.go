@@ -2,10 +2,12 @@ package forgot_password_token_model
 
 import (
 	"golang-app/app/models/database"
+	"golang-app/app/models/user_model"
 )
 
 type ForgotPasswordToken struct {
-	UserId uint `gorm:"unique"`
+	UserId uint            `gorm:"primarykey"`
+	User   user_model.User `gorm:"foreignKey:UserId"`
 	Token  string
 }
 
@@ -27,10 +29,10 @@ func FindByToken(token_str string) (*ForgotPasswordToken, error) {
 	return &token, err
 }
 
-func (t *ForgotPasswordToken) Create() error {
-	return database.Conn().Create(t).Error
+func (t *ForgotPasswordToken) Save() error {
+	return database.Conn().Save(&t).Error
 }
 
 func (t *ForgotPasswordToken) Delete() error {
-	return database.Conn().Delete("user = ?", t.UserId).Error
+	return database.Conn().Delete(&t).Error
 }
