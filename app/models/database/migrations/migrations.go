@@ -2,6 +2,7 @@ package migrations
 
 import (
 	"golang-app/app/models/database"
+	"golang-app/app/models/forgot_password_token_model.go"
 	"golang-app/app/models/user_model"
 	"golang-app/app/utils/auth"
 )
@@ -11,6 +12,7 @@ import (
  */
 func Migrate() {
 	database.Conn().AutoMigrate(&user_model.User{})
+	database.Conn().AutoMigrate(&forgot_password_token_model.ForgotPasswordToken{})
 }
 
 func Seed() {

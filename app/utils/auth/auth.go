@@ -26,6 +26,17 @@ type RegisterRequest struct {
 	PasswordConfirm string `json:"password_confirm"`
 }
 
+type ForgotPasswordRequest struct {
+	Email string `json:"email"`
+}
+
+type ResetPasswordRequest struct {
+	Email           string `json:"email"`
+	Token           string `json:"token"`
+	Password        string `json:"password"`
+	PasswordConfirm string `json:"password_confirm"`
+}
+
 type AuthClaims struct {
 	// UserId uint  `json:"user_id"`
 	Payload map[string]any `json:"payload"`
